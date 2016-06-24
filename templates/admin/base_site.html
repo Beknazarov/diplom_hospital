@@ -1,0 +1,126 @@
+{% extends "admin/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block extrastyle %}
+    <style>
+        .actionlist {
+            display: none;
+        }
+
+        .italic-title {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block extrahead %}
+
+    <script src="{% static 'jquery/js/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        function clearRegion() {
+            $("select[name='region_fk']").empty();
+            $("select[name='region_fk']").append($("<option value='0'>---------</option>"));
+        }
+        function clearTown() {
+            $("select[name='town_fk']").empty();
+            $("select[name='town_fk']").append($("<option value='0'>---------</option>"));
+        }
+
+        $(document).ready(function () {
+            {#            $('#id_insurance_territory').attr('disabled','disabled');#}
+            {#                                    clearRegion();#}
+            {#                                    clearTown();#}
+            $("select[name='area_fk']").bind("change", function () {
+                $('#id_insurance_territory').val($("#id_area_fk option:selected").text());
+                $.ajax({
+                    url: "{% url 'get_region' %}",
+                    type: "GET",
+                    data: {area_id: $("select[name='area_fk']").val()},
+                    success: function (data) {
+                        clearRegion();
+
+                        $.each(data.region, function (k, v) {
+
+
+                            $("select[name='region_fk']").append($("<option value='" + k + "'>" + v + "</option>"));
+
+                        });
+                    },
+                    error: function (data) {
+                        clearRegion();
+                        clearTown();
+                    }
+                });
+            });
+
+            $("select[name='region_fk']").bind("change", function () {
+                clearTown();
+                $.ajax({
+
+                    url: "{% url 'get_town' %}",
+                    type: "GET",
+                    context: document.body,
+                    data: {region_id: $("select[name='region_fk']").val()},
+                    success: function (data) {
+                        clearTown();
+                        $.each(data.town, function (k, v) {
+                            $("select[name='town_fk']").append($("<option value='" + k + "'>" + v + "</option>"));
+
+
+                        });
+
+
+                        {#                        for(ist in data.town){#}
+                        {#                            $("select[name='town_fk']").empty();#}
+                        {#                            $("select[name='town_fk']").append($("<option value='" + ist + "'>" + data.town[ist]+ "</option>"));#}
+                        {#                        }#}
+
+                    },
+                    error: function (data) {
+                        clearTown();
+                    }
+                });
+            });
+{#          $('.italic-title').text("aiba");#}
+        });
+    </script>
+{% endblock %}
+{% block title %}
+    {{ title }} | РНЦУ
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">РНЦУ</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+{% block userlinks %}
+    <a href="{% url 'info-table' %}">{% trans 'Информационное табло' %}</a> /
+    {% if site_url %}
+        <a href="{{ site_url }}">{% trans 'View site' %}</a> /
+    {% endif %}
+    {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+            <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+        {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+    {% endif %}
+    <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+{% endblock %}
+<div class="copyright">
+    {% block copyright %}
+        sdf {{ request.session.doctor_role }}sdf
+        Copyright &copy; 2016 <br>Developed by
+        <a href="https://medlenovo.herokuapp.com/" target="_blank">medlenovo.herokuapp.com</a>
+    {% endblock %}
+</div>
+
+<div class="branding">{% block footer_branding %}
+    {% with 'Бекназаров Н.Б, Абдыкасымов А.Б' as admin_name %}
+        {{ admin_name }}
+        Copyright &copy; 2016 <br>
+
+    {% endwith %}
+{% endblock %}</div>

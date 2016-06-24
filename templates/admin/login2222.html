@@ -1,0 +1,48 @@
+{% extends 'admin/base.html' %}
+{% load staticfiles %}
+{% block extrahead %}
+    <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin-login.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="admin-login">
+
+        <form action="" method="post" id="login">
+            {% csrf_token %}
+            <h1>Форма входа</h1>
+            <fieldset id="inputs">
+                {{ form.as_p }}
+            </fieldset>
+
+            <fieldset id="actions">
+                <input type="submit" value="Login" id="submit"/>.
+            </fieldset>
+        </form>
+    </div>
+    <p id="success"></p>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#submit').click(function () {
+                var data = {
+                    "username": $('#id_username').val(),
+                    "password": $('#id_password').val()
+                };
+                $.ajax({
+                    url: "{% url 'get-status-doctor' %}",
+                    type: "GET",
+                    data: data,
+                    success: function (data) {
+                        $("#success").text(data.data);
+                    },
+                    error: function () {
+
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+

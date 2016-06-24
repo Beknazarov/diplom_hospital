@@ -1,0 +1,16 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls admin_static admin_list %}
+{% block content %}
+       <a href="/pharmacy/sheet_assignment/" id="add-appoint" class="btn btn-info">Добавление лист назначении</a>
+    {% block extrastyle %}
+    <style>
+        #add-appoint{
+            float: left;
+            margin-right: 20px;
+        }
+    </style>
+    {% endblock %}
+    {{ block.super }}
+
+
+{% endblock %}

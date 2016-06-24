@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load calculate %}
+{% load staticfiles %}
+{% block content %}
+    <div class="container padd-topp">
+        {% block styleblock %}
+            <link rel="stylesheet" href="{% static 'css/profile_style.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/ksfinfo.css' %}"/>
+        {% endblock %}
+        {% block jsblock %}
+
+            <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/printThis.js' %}"></script>
+        {% endblock %}
+        {% if request.session.patient %}
+
+            <div class="wrap" id="print-med-cart">
+                <table class="thead">
+                    <thead>
+                    <tr>
+                        <th>Код ЛПО</th>
+                        <th>Медицинская документация форма №003/У утверждена МЗ КР 01.16.06 №213</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div class="name-title"><span>Наименование медицинской организации</span></div>
+                <h3> Медицинская карта стационарного больного № <span>{{ patient.num_medic_record }}</span></h3>
+                <div class="date clearfix">
+                    <div class="left">
+                        <div>Дата потупления <span>{{ record.receipt_date |date:"d-m-Y" }}</span></div>
+                        <div>Дата выписки <span>{{ record.issue_date |date:"d-m-Y h:m" }}</span></div>
+                    </div>
+                    <div class="right">
+                        <div>Время потупления <span>{{ record.receipt_date |date:"h:m" }}</span></div>
+                        <div>Время выписки <span>{{ record.issue_date |date:"h:m" }}</span></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="clearfix">
+                    <div class="left">Болум <span>{{ record.dept_fk.name_dept }}</span></div>
+                    <div class="right">Палата № <span>{{ record.num_ward }}</span></div>
+                </div>
+                {% if  record.trans_dept_fk %}
+                    <div>Переведен в отделение <span>{{ record.trans_dept_fk }}</span></div>
+                {% else %}
+                    <div>Переведен в отделение <span></span></div>
+                {% endif %}
+                <div class="clearfix">
+                    <div class="left28">Проведено койко дней <span></span></div>
+                    <div class="left50">Группа крови <span>{{ patient.bloodgroup_pat }}</span></div>
+                    <div class="right">Резус фактор <span>{{ patient.rhesusfactor_pat }}</span></div>
+                </div>
+
+
+                <div> Побочные действия лекарств  <span>{% for effectdrug in record.effectsdrugs_set.all %}
+                    {{ effectdrug.drug }}{{ effectdrug.descriptionDrugs }}
+                {% endfor %}</span>
+                </div>
+                <hr>
+                <div class="clearfix">
+                    <div class="left">ФИО
+                        <span>{{ patient.surname_pat }} {{ patient.name_pat }} {{ patient.last_name_pat }}</span>
+                    </div>
+                    {% if  patient.gender_pat %}
+                        <div class="right"> Пол <span>{{ patient.gender_pat }}</span></div>
+                    {% endif %}
+                </div>
+                <div class="clearfix">
+                    <div class="left">Число месяц год рождения <span> {{ patient.date_born_pat |date:"c" }}</span></div>
+                    <div class="right">Возраст <span>{{ patient.date_born_pat|getAge }}</span></div>
+                </div>
+                <div>Территория страхования <span> {{ patient.insurance_territory }}</span></div>
+
+                <div>Номер удостоверения социальной защиты <span> {{ patient.num_social_protec }}</span></div>
+                <div class="clearfix">
+                    <div class="left50">Гражданство <span>{{ patient.citizenship_fk }}</span></div>
+                </div>
+                <div>Категория пациента <span>{{ patient.category_pat }}</span></div>
+                <div class="clearfix">
+                    {% if patient.retired_pat %}
+                        <div class="left">Номер удостоверения <span>{{ patient.retired_pat }}</span></div>
+                        <div class="left50"><input type="checkbox" checked disabled/> Пенсионер</div>
+                    {% else %}
+                        <div class="left">Номер удостоверения <span></span></div>
+                        <div class="left50"><input type="checkbox" disabled/> Пенсионер</div>
+                    {% endif %}
+                </div>
+
+                <div>Постоянное место жительство <span>
+                    {{ patient.area_fk.name_area }} {{ patient.region_fk.name_reg }} {{ patient.street_pat }}</span>
+                </div>
+                <div>Место работы, должность <span>{{ patient.place_work_pat }}</span></div>
+                {% for fordis in patient.fordisabled_set.all %}
+                    <div class="clearfix">
+                        {% if  fordis.VOV_dsbld %}
+                            <div class="left"> Для инвалидов: ВОВ <span><input type="checkbox" checked
+                                                                               disabled/> </span>
+                            </div>
+                        {% else %}
+                            <div class="left"> Для инвалидов: ВОВ <span><input type="checkbox" disabled/></span></div>
+                        {% endif %}
+
+                        <div class="left28">Дата инвалид: <span> {{ fordis.year_dsbld|date:"d-m-Y" }} </span></div>
+                        <div class="left28">
+                            Группа инвалидности: <span> {{ fordis.group_dsbld }}  </span>
+                        </div>
+
+                    </div>
+                    <div> Описание инвалидности: <span> {{ fordis.desc_dsbld }} </span></div>
+                {% endfor %}
+                {% for send in record.sender_set.all %}
+                    <div class="clearfix">
+                        <div class="left">Кем направлен больной <span> {{ send.name_send }}</span></div>
+                        {% if  send.estab_send %}
+                            <div class="right"> Наименование лечебного учреждения <span> {{ send.estab_send }}</span>
+                            </div>
+                        {% else %}
+                            <div class="right"> Наименование лечебного учреждения <span> </span></div>
+                        {% endif %}
+                    </div>
+                    <div class="sender">Госпитализирован в больницу(вне плана) спустя
+                        <span> {{ send.time_after_ill|date:"h:m" }} </span> времени после несчастных случаев (ожога,
+                        электрического удара, отравления, отморожения, ушиба, кровотечения, растяжения, болевых
+                        приступов и. д. испытаний) Госпитализация в плановом порядке (подчеркнуть)
+                    </div>
+
+                    <div> Диагноз направившего учреждения (диагнозу, Diagnosis)
+                        <span> {{ send.diag_sender.name }} </span>
+                        {% for causeillness in send.cause_illness_fk.all %}
+                            <span> {{ causeillness.name_cill }} </span>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div>Диагноз при поступлении <span> {{ record.admission_diag }} </span></div>
+                <div class="clearfix">
+                    <div class="left">
+                        дата установления <span> {{ record.receipt_date |date:"d-m-Y h:m" }} </span></div>
+                    <div class="right">
+                        Ф.И.О врача <span> {{ record.doctor }} </span></div>
+                </div>
+                {% for dig in record.diagnosis_set.all %}
+                    <div>
+                        Диагноз клиническии <span> {{ dig.clinical_diag }} </span>
+                    </div>
+                    <div class="clearfix">
+                        <div class="left">дата установления <span>{{ dig.clinical_diag_time|date:"d-m-Y h:m" }}</span>
+                        </div>
+                        <div class="right">Ф.И.О врача <span>{{ dig.clinical_diag_doctor }} </span></div>
+                    </div>
+
+                    <div>Диагноз заключительный клинический(Clinical diagnosis determinenend):</div>
+                    <div>основная болезнь(Morbus basalis): <span> {{ dig.morbus_basalis }} </span></div>
+                    <div>осложнение основного заболевания(Complicatio morbus basalis):
+                        <span>{{ dig.complicatio_morbus_basalis }} </span></div>
+                    <div>сопустствующая болезнь (Morbus concomitans): <span> {{ dig.morbus_concomitans }} </span></div>
+                    <div class="clearfix">
+                        <div class="left">Дата установления
+                            <span>  {{ dig.final_clinical_diag_time |date:"d-m-Y h:m" }}</span></div>
+                        <div class="right">Ф.И.О врача <span>  {{ dig.final_clinical_diag_doctor }} </span></div>
+                    </div>
+                {% endfor %}
+
+                <div class="operation">Хирургические операции, методы обезбаливания и после операционные осложнения
+                </div>
+                <table class="tbottom">
+                    <thead>
+                    <tr>
+                        <th>Название операции</th>
+                        <th>Дата, часы</th>
+                        <th>Метод обезболивания</th>
+                        <th>Осложнения</th>
+                        <th>Ф.И.О оперированного врача</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for operation in record.typeoperation_set.all %}
+                        <tr>
+                            <td><span>{{ operation.name_tpop }}</span></td>
+                            <td><span> {{ operation.data_tpop|date:"d-m-Y h:m" }}</span></td>
+                            <td> {{ operation.method_anesthesia }}</td>
+                            <td> {{ operation.healing_tpop }}</td>
+                            <td><span>
+                                {{ operation.doctor_fk }}</span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="wrapClone">
+            <div class="clearfix">
+                    <div class="app-list-patient">
+                        <a href="{% url 'app-list-report' %}" class="download">Лист назначения</a>
+                        <button id='print' class="download">На печать</button>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    $('#print').click(function () {
+                        $('#print-med-cart').printThis({
+                            debug: false,
+                            importCSS: true,
+                            importStyle: false,
+                            printContainer: true,
+                            loadCSS: "/static/css/ksfinfo.css",
+                            pageTitle: "",
+                            removeInline: false,
+                            printDelay: 333,
+                            header: null,
+                            formValues: true
+                        });
+                    });
+                });
+            </script>
+        {% else %}
+            ad
+        {% endif %}
+    </div>
+{% endblock %}

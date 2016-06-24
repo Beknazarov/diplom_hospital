@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <img src="/media/others/thankey.png"/>
+
+    <script type="text/javascript">
+        var pathname = window.location.pathname;
+        window.setTimeout(function () {
+            window.location.href = pathname.substring(0, 1);
+        }, 2000);
+    </script>
+{% endblock %}

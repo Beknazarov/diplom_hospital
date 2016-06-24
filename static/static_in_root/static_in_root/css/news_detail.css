@@ -1,0 +1,88 @@
+
+.img-wrap-big {
+    width: 26%;
+    float: left;
+    margin: 0 20px 20px 0;
+    padding: 5px;
+
+    font-size: 0;
+
+}
+
+h2 {
+    margin: 0;
+
+}
+
+.description {
+    font-size: 18px;
+
+}
+
+/********************more-news**********************/
+.more-news {
+    margin-top: 100px;
+    width: 100%;
+    min-width: 1200px;
+    text-align: center;
+}
+
+.item {
+    float: left;
+    width: 300px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+}
+
+.items {
+    overflow: hidden;
+}
+
+.button1 a {
+    display: block;
+    text-decoration: none;
+    color: #f0fafb;
+    padding: .8em 2em;
+}
+
+.button1 {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: -1px -1px #000;
+    user-select: none;
+    outline: none;
+    background-color: #000;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .0) 30%, rgba(255, 255, 255, .8), rgba(255, 255, 255, .0) 70%), radial-gradient(190% 100% at 50% 0%, rgba(255, 255, 255, .7) 0%, rgba(255, 255, 255, .5) 50%, rgba(0, 0, 0, 0) 50%);
+    background-repeat: no-repeat;
+    background-size: 200% 100%, auto;
+    background-position: 200% 0, 0 0;
+    box-shadow: rgba(0, 0, 0, .3) 0 2px 5px;
+    cursor: pointer;
+}
+
+.button1:active {
+    top: 1px;
+    box-shadow: none;
+}
+
+.button1:hover {
+    transition: .5s linear;
+    background-position: -200% 0, 0 0;
+}
+
+.img-wrap img {
+    width: 100%;
+    height: 200px;
+    border: 2px solid #1c2529;
+}
+
+h3 {
+    margin: 0 0 20px 0;
+    padding: 11px 0 11px 50px;
+    background-color: #ebf6f6;
+    -ms-text-align-last: left;
+    text-align: left;
+
+}

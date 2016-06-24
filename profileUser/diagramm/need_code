@@ -1,0 +1,9 @@
+login = CouponField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
+    password = CouponField(widget=forms.TextInput(attrs={'placeholder': 'Пароль', 'type': 'password'}),
+                               max_length=100)
+
+
+
+class CouponField(forms.CharField):
+    def to_python(self, value):
+        return value.lower()

@@ -1,0 +1,25 @@
+.error, .success {
+    border: 1px solid;
+    margin: 10px 0;
+    padding: 15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+
+.error a, .success a {
+    float: right;
+}
+
+.alert-message {
+    display: none;
+}

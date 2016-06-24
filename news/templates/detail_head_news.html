@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+{% block styleblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/news_detail.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container padd-topp clearfix">
+
+        <div class="img-wrap-big brdr"><img src="{{ detail_news.photo_news.url }}" alt="categ-news"/></div>
+        <h2 class="more">{{ detail_news.title_news }}</h2>
+        <p class="date">Опубликовано {{ detail_news.data_pub }}</p>
+        <span class="description">{{ detail_news.description_news }}</span>
+    </div>
+{% endblock %}

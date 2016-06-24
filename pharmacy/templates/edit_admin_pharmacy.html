@@ -1,0 +1,25 @@
+{% extends 'base_pharmacy.html' %}
+{% load calculate %}
+{% load staticfiles %}
+{% block content_pharmacy %}
+    {% block styleblock %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}">
+    {% endblock %}
+    <div class="container padd-topp">
+        <div class="center-pharmacy-add center">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ formset }}
+                <input type="submit" value="Update"/>
+            </form>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select option:not(:selected)').prop('disabled', 'disabled');
+
+        });
+    </script>
+{% endblock %}

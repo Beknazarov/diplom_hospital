@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load calculate %}
+{% load staticfiles %}
+{% block content %}
+    <div class="container padd-topp">
+        {% block styleblock %}
+            <link rel="stylesheet" href="{% static 'css/profile_style.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/info-table-style.css' %}"/>
+        {% endblock %}
+        <div class="report-app-list">
+            <h2>Лист назначений</h2>
+
+            <div class="tbl-header">
+
+                <table cellpadding="0" cellspacing="0" border="0">
+
+                    <thead>
+                    <tr>
+                        <th>Лекарство</th>
+                        <th>Описание</th>
+                        <th>Дата назначения</th>
+                        <th>Источник</th>
+                        <th>Количество</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="tbl-content">
+
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                    {% for report_app_list in appreportinfo %}
+                        <tr>
+                            <td>{{ report_app_list.drugAl }}</td>
+                            <td>{{ report_app_list.descriptionDrinkDrug }}</td>
+                            <td>{{ report_app_list.beginAppointment|date:"d-m-Y" }}</td>
+                            <td>{{ report_app_list.sourceDrug }}</td>
+                            <td>{{ report_app_list.amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    {% block jsblock %}
+        <script src="{% static 'js/profile.js' %}" type="text/javascript"></script>
+        <script src="{% static 'jquery/js/jquery.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'adminLTE/plugins/datepicker/bootstrap-datepicker.js' %}"
+                type="text/javascript"></script>
+    {% endblock %}
+    {% block styleblock %}
+        <link rel="stylesheet" media="screen" href="{% static 'css/profile_style.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+
+        <link rel="stylesheet" href="{% static 'css/alert.css' %}"/>    {% endblock %}
+    <div class="container padd-topp">
+        <div class="center-update-profile">
+{#            <script type="text/javascript">#}
+{#                $(document).ready(function () {#}
+{#                    $('#id_date_born_pat').val($.datepicker.formatDate('dd M yy', new Date()));#}
+{#                });#}
+{#            </script>#}
+            {% if form.errors %}
+
+                <div class="alert alert-danger error">
+
+                    <span>произошла ошибка, такой логин уже существует</span>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            {% endif %}
+            {% if messages %}
+                <div class="alert alert-danger success">
+
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            {% endif %}
+            <form action="" method="POST" class="update-info-form" name="update-info-form"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <ul>
+                    <li>
+                        <h2>Обновления профиля</h2>
+                        <span class="required_notification">* Denotes Required Field</span>
+                    </li>
+                    <li>
+                        <label for="surname_pat">Фамилия:</label>
+                        {{ form.surname_pat }}
+                    </li>
+                    <li>
+                        <label for="name_pat">Имя:</label>
+                        {{ form.name_pat }}
+                    </li>
+                    <li>
+                        <label for="last_name_pat">Отчество:</label>
+                        {{ form.last_name_pat }}
+                    </li>
+                    <li>
+                        <label for="date_born_pat">Дата рождения:</label>
+                        {{ form.date_born_pat }}
+                    </li>
+                    <li>
+                        <label for="email_pat">Электронный адрес:</label>
+
+                        {{ form.email_pat }}
+
+                        <span class="form_hint">Пример "name@gmail.com или name@mail.ru ... "</span>
+                    </li>
+                    <li>
+                        <div class="circular">
+                            <label for="photo_pat">Фотография:</label>
+                            <img src="/media/others/default_img.png" alt="default-img" id="current-image"/><br/>
+                            {{ form.photo_pat }}
+                        </div>
+                    </li>
+                    <li>
+                        <label for="login_pat">Логин:</label>
+                        {{ form.login_pat }}
+                    </li>
+                    <li>
+                        <label for="password_pat">Пароль:</label>
+                        {{ form.password_pat }}
+                    </li>
+                    <li>
+                        <input type="hidden" id="pass-login-change" name="login-password-change" value="0"/>
+                        <input id="btn-update-info" type="submit" value="Обновить" onclick="return clicked();"/>
+                    </li>
+
+                </ul>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

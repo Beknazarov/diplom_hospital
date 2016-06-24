@@ -1,0 +1,119 @@
+﻿{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="container">
+
+    <div class=" padd-topp wrap">
+        <title>Медицинская карта стационарного больного Форма 003-у</title>
+        {% block styleblock %}
+            <style>
+                @font-face {
+                    font-family: Arial;
+                    src: url({{ media }}/fonts/Arial.ttf);
+                }
+
+                @font-face {
+                    font-family: Arial;
+                    src: url({{ media }}/fonts/Code2000.ttf);
+                }
+
+                @font-face {
+                    font-family: "Droid Sans";
+                    src: url({{ media }}/fonts/Droid-Sans.ttf);
+                }
+
+                @font-face {
+                    font-family: "Open Sans";
+                    src: url({{ media }}/fonts/Open-Sans.ttf);
+                }
+
+                @font-face {
+                    font-family: Roboto;
+                    src: url({{ media }}/fonts/Roboto.ttf);
+                }
+
+                @font-face {
+                    font-family: "Times New Roman";
+                    src: url({{ media }}/fonts/Times-New-Roman.ttf);
+                }
+
+                @page {
+                    size: A4;
+                    margin: 1cm;
+                }
+
+                body {
+                    font-family: Arial;
+                    font-size: 14px;
+                    line-height: 1em;
+                }
+
+                body div {
+                    margin-left: 50px;
+                }
+
+                p {
+                    font-family: "Droid Sans";
+                    color: #FB9925;
+                }
+
+                h2 {
+                    font-weight: bold;
+                    font-size: 18px;
+                    margin-left: 10px;
+                }
+
+                div {
+                    margin: 1%;
+                }
+
+                label {
+                    font-weight: bold;
+                }
+
+                .value {
+                    text-decoration: underline;
+                }
+
+                .onetab {
+                    padding-left: 50px;
+                }
+                .ml20{
+                    margin-left: 20px;
+                }
+            span.value{
+                margin: 0 5px;
+            }
+            </style>
+            <link rel="stylesheet" href="{% static 'css/profile_style.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/ksfinfo.css' %}"/>
+        {% endblock %}
+
+        {% block jsblock %}
+
+            <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/printThis.js' %}"></script>
+        {% endblock %}
+        <h2>Отчет по медицинской карте пациента: </h2>
+        {% include 'parts/patient.html' %}
+
+        <h2>История жизни больного(Anamnesis vitae)</h2>
+        {% include 'parts/history_life.html' %}
+
+            {% include 'parts/women.html' %}
+
+        {% include 'parts/conditions_now.html' %}
+        {% include 'parts/senses.html' %}
+        {% include 'parts/respiratory.html' %}
+        {% include 'parts/cardio_vacular.html' %}
+        {% include 'parts/digestive.html' %}
+        {% include 'parts/genito_urinary.html' %}
+        {% include 'parts/endocrine.html' %}
+        {% include 'parts/neuro_psychological.html' %}
+        {% include 'parts/status_localis.html' %}
+        {#{% include 'parts/plan_survey.html' %}#}
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'admin/change_form.html' %}
+{% load staticfiles %}
+
+
+
+{% block extrastyle %}
+    <style>
+        .panel_div {
+            margin: 40px auto;
+            width: 200px;
+            position: fixed; /*обязательное свойство*/
+            top: 100px;
+            padding: 20px;
+            right: 0;
+            border: 1px solid #367aab;
+            overflow: hidden; /*обязательное свойство*/
+            background: #60A7C1;
+        }
+
+        .panel_list {
+            width: 180px;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .panel_list a {
+            display: block;
+            margin-bottom: -1px;
+            padding: 8px;
+            text-decoration: none;
+            color: #000000;
+            border: 1px solid #e5e5e5;
+        }
+
+        .pane_list a:hover {
+            background: #f5f5f5;
+
+        }
+
+        .panel_list > li {
+            cursor: pointer;
+            list-style-type: none;
+
+        }
+
+        .panel_list > li:hover {
+            background: #f5f5f5;
+        }
+
+
+    </style>
+{% endblock %}
+{% block extrahead %}
+    <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("div.panel_div").hide();
+            var parentcode;
+            var inputcode;
+            var prevvalue;
+            $("input, textarea").focus(function () {
+                prevvalue = $(this).attr("name");
+                var padre = $(this).parents('.form-row');
+                var codestring = padre.attr('class');
+                parentcode = codestring;
+                codestring = codestring.split('form-row field-')[1];
+                inputcode = codestring;
+                console.log(codestring);
+                $.ajax({
+                    type: "POST",
+                    url: '{% url 'getdata' %}',
+                    data: {"inputname": codestring},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.result == 'empty') {
+                            console.log('EMPTY');
+                            $("div.panel_div").hide();
+                            $(".panel_list").empty();
+                        }
+                        else if (data.result == 'none') {
+                            console.log('NONE');
+                            //$("div.panel_div").hide();
+                            //$(".panel_list").empty();
+                        }
+                        else {
+                            //$(".panel_list").empty();
+                           // $("div.panel_div").show();
+                            $.each(data.result, function (i, val) {
+                                console.log(val);
+                                $(".panel_list").append("<li class=\"node\"><p class=\"val\">" + val + "</p></li>");
+                            });
+                        }
+                    }
+
+                });
+            });
+            $(".panel_list").on('click', '.node', function () {
+                var text = $(this).children().text();
+                $(this).prop('disabled', true);
+                var value_many = $('input[name="' + prevvalue + '"]');
+                if (!value_many) {
+                    value_many.val(text);
+                } else {
+                    text += ", " + value_many.val();
+                    value_many.val(text);
+                }
+                var div = $("div[class='" + parentcode + "']");
+                input = div.find("input[class='" + div + "']").val();
+            });
+        });
+
+
+    </script>
+{% endblock %}
+
+
+
+
+

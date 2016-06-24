@@ -1,0 +1,222 @@
+/* Базовый контейнер табов */
+/*.tabs {*/
+/*min-width: 320px;*/
+/*max-width: 800px;*/
+/*padding: 0;*/
+/*}*/
+
+/* стили секций с содержанием */
+section {
+    display: none;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.tabs input {
+    display: none;
+}
+
+/* стили вкладок (табов) */
+.tabs label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #aaa;
+    border: 1px solid #ddd;
+    background: #f1f1f1;
+    border-radius: 3px 3px 0 0;
+}
+
+/* шрифт-иконки от Font Awesome в формате Unicode */
+.tabs label:before {
+    font-family: georgia, serif;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+.tabs label[for*="1"]:before {
+    content: "\f19a";
+}
+
+.tabs label[for*="2"]:before {
+    content: "\f17a";
+}
+
+/*.tabs label[for*="3"]:before {*/
+/*content: "\f13b";*/
+/*}*/
+
+/*.tabs label[for*="4"]:before {*/
+/*content: "\f13c";*/
+/*}*/
+
+/* изменения стиля заголовков вкладок при наведении */
+.tabs label:hover {
+    color: #888;
+    cursor: pointer;
+}
+
+/* стили для активной вкладки */
+.tabs input:checked + label {
+    color: #555;
+    border: 1px solid #ddd;
+    border-top: 1px solid #009933;
+    border-bottom: 1px solid #fff;
+    background: #fff;
+}
+
+/* активация секций с помощью переключателя :checked */
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4,
+#tab5:checked ~ #content5,
+#tab6:checked ~ #content6,
+#tab7:checked ~ #content7{
+    display: block;
+}
+
+/*!* медиа запросы для различных типов носителей *!*/
+/*@media screen and (max-width: 680px) {*/
+/*.tabs label {*/
+/*font-size: 0;*/
+/*}*/
+
+/*.tabs label:before {*/
+/*margin: 0;*/
+/*font-size: 18px;*/
+/*}*/
+/*}*/
+
+/*@media screen and (max-width: 400px) {*/
+/*.tabs label {*/
+/*padding: 15px;*/
+/*}*/
+/*}*/
+
+.tg, .tg2 {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.tg td, .tg2 td {
+    font-family: georgia, serif;
+    font-size: 14px;
+    padding: 11px 20px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    word-break: normal;
+}
+
+.tg th, .tg2 th {
+    font-family: georgia, serif;
+    font-size: 14px;
+    font-weight: normal;
+
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    word-break: normal;
+}
+
+.tg th {
+    padding: 11px 27px;
+}
+
+.tg2 th {
+    padding: 18px;
+}
+
+.tg .tg-baqh, .tg2 .tg-baqh2 {
+    text-align: center;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.tg .tg-9j4x, .tg2 .tg-9j4x2 {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+    text-align: center;
+    vertical-align: top
+}
+
+.tg .tg-amwm, .tg2 .tg-amwm2 {
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top
+}
+
+.left {
+    float: left;
+}
+
+.left28 {
+    float: left;
+    width: 28%;
+}
+
+.right {
+    float: right;
+}
+
+.clearfix-analyze {
+    overflow: hidden;
+
+}
+
+.header-ministry span {
+    text-decoration: none;
+}
+
+.header-ministry {
+    margin-right: 300px;
+
+}
+
+span {
+    text-decoration: underline;
+}
+
+.profile div, .lh-bottom {
+    line-height: 1.7;
+}
+
+.header-title, .left2 {
+    margin-left: 36px;
+}
+
+.profile, .clearfix-analyze {
+    margin-top: 15px;
+}
+
+.doctor {
+    margin-left: 350px;
+}
+
+.bloodchemistry ul, .renal_analyze ul, .all_analyze ul {
+    -webkit-padding-start: 0;
+    margin-left: 20px;
+}
+
+.bloodchemistry ul li, .renal_analyze ul li, .all_analyze ul li {
+    list-style-type: decimal;
+}
+
+.bloodchemistry, .renal_analyze, .all_analyze {
+    margin-left: 300px;
+}
+
+.complate-analyze {
+    margin-left: 100px;
+}
+
+.renal_analyze .header-title, .renal_analyze .left2,
+.all_analyze .header-title, .all_analyze .left2{
+    margin: 0;
+}

@@ -1,0 +1,82 @@
+h3 {
+    text-align: center;
+    margin: 5px 0 15px 0;
+}
+
+.thead {
+    border: 2px solid #000;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.thead th {
+    border: 2px solid #000;
+    font-weight: normal;
+}
+
+.thead th:first-child {
+    width: 20%;
+}
+
+.wrap, .wrapClone {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.left {
+    float: left;
+}
+
+.left28 {
+    float: left;
+    width: 28%;
+}
+
+.right2 {
+    margin-left: 200px;
+}
+
+.sender, .operation {
+    font-weight: normal;
+}
+
+.left50 {
+    float: left;
+    width: 50%;
+    margin-left: 50px;
+}
+
+.name-title {
+    text-align: center;
+
+}
+
+.name-title span {
+    text-decoration: none;
+}
+
+.right {
+    float: right;
+}
+
+div {
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+span {
+    text-decoration: underline;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.tbottom {
+    width: 100%;
+    text-align: center;
+}
+
+.tbottom, .tbottom th, .tbottom td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}

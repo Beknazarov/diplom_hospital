@@ -1,0 +1,62 @@
+{% extends 'base_pharmacy.html' %}
+{% load calculate %}
+{% load staticfiles %}
+{% block content_pharmacy %}
+    {% block styleblock %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/alert.css' %}"/>
+    {% endblock %}
+    <div class="container">
+    <a href="/admin/pharmacy/appointmentlist/">Просмотр листа назначения</a>
+        <div class="center-pharmacy-add center">
+            <h2>{{ title }}</h2>
+            <select name="patient_select" id="patient_select" required="required">
+                {% for pat in patient %}
+                    <option value="{{ pat.id }}">{{ pat }}</option>
+                {% endfor %}
+            </select>
+            <form method="post" action="{{ action }}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" name="extra" value="{{ extra }}" id="extra"/><br/>
+                <input type="hidden" name="patient" value="" id="idPatient"/><br/>
+                <div class="clearfix">
+                    <div class="left"><input type="submit" name="action" value="+" id="create_one"/></div>
+                    <div class="right"><input type="submit" name="action" value="-" id="delete_one"/></div>
+                </div>
+                {{ formset }}
+
+                <input type="submit" name="action" value="Create" class="btn btn-success"/>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#idPatient").val($("#patient_select").val());
+            $("#patient_select").click(function () {
+                $("#idPatient").val($("#patient_select").val());
+            });
+            var data = {
+                "doctor_id": {{ request.session.doctor_id }}
+            };
+            $.ajax({
+                type: "POST",
+                url: "{% url 'doctor-info' %}",
+                data: data,
+                success: function (data) {
+                    $.each(data.infoDoc, function (k, v) {
+                        $('.user-header p').text(v);
+                        $('.pull-left p').text(v.split(" ").slice(0, 2).join(" "));
+                        $('.hidden-xs').text(v);
+                    });
+
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

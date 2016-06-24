@@ -1,0 +1,17 @@
+ {% for a,b in patient|zip:diagnose %}
+                                <tr>
+
+                                    <td>{{ a.patient_fk }}</td>
+                                    <td>{{ a.num_ward }}</td>
+                                    <td>{{ a.receipt_date|date:'d-m-Y' }}</td>
+                                    {% if b %}
+
+                                        <td>{{ b.clinical_diag }}</td>
+                                        <td>{{ b.clinical_diag_doctor }}</td>
+                                    {% else %}
+                                        <td>Диагноз не установлен</td>
+                                        <td>Доктор неизвестен</td>
+                                    {% endif %}
+                                </tr>
+
+                            {% endfor %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+{% block styleblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/info-table-style.css' %}"/>
+{% endblock %}
+{% block jsblock %}
+    <script type="text/javascript" src="{% static 'js/info-table.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container padd-topp">
+        <div class="info-table-title"><p>Госпитализированные больные</p></div>
+        <div class="tbl-header">
+
+            <table cellpadding="0" cellspacing="0" border="0">
+
+                <thead>
+                <tr>
+                    <th>Пациент</th>
+                    <th>Палата</th>
+                    <th>Дата поступления</th>
+                    <th>Диагноз</th>
+                    <th>Леч. врач</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tbl-content">
+
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+
+                {% for dig in diagnose %}
+                    <tr>
+
+                        <td>{{ dig.patient_fk.patient_fk }}</td>
+                        <td>{{ dig.patient_fk.num_ward }}</td>
+                        <td>{{ dig.patient_fk.receipt_date|date:'d-m-Y' }}</td>
+                        {% if dig.clinical_diag %}
+
+                            <td>{{ dig.clinical_diag }}</td>
+                            <td>{{ dig.clinical_diag_doctor }}</td>
+                        {% else %}
+                            <td>Диагноз не установлен</td>
+                            <td>Доктор неизвестен</td>
+                        {% endif %}
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="padding-top-table"></div>
+        <div class="info-table-title2"><p>Операции</p></div>
+        <div class="tbl-header">
+
+            <table cellpadding="0" cellspacing="0" border="0" class="second">
+                <thead>
+                <tr>
+                    <td>Пациент</td>
+                    <td>Диагноз</td>
+                    <td>Название опреации</td>
+                    <td>Дата операции</td>
+                    <td>Ассистенты</td>
+                    <td>Профессор</td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                {% for oper,oper_diagnose in operation|zip:operation_diagnose %}
+                    <tr>
+
+                        <td>{{ oper.patient_fk.patient_fk }}</td>
+                        <td>{{ oper_diagnose.clinical_diag.name }}</td>
+                        <td>{{ oper.name_tpop }}</td>
+                        <td>{{ oper.data_tpop|date:'d-m-Y' }}</td>
+                        <td>{% for assist in oper.assistant_doc.all %}{{ assist }}<br/>{% endfor %}</td>
+                        <td>{{ oper.doctor_fk.fio_doc }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(window).on("load resize ", function () {
+            var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+            $('.tbl-header').css({'padding-right': scrollWidth});
+        }).resize();
+    </script>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base_pharmacy.html' %}
+{% load calculate %}
+{% load app_filters %}
+{% load staticfiles %}
+{% block content_pharmacy %}
+    {% block styleblock %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}"/>
+    {% endblock %}
+    <div class="container padd-topp">
+        <div class="center-pharmacy-add center">
+            <div class="center-alert">
+                {% if error %}
+                    <div class="alert alert-danger error ">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+            <select name="patient" id="patientID">
+                <option value="">-----------------</option>
+                {% for pat in l %}
+                    <option value="{{ pat.id }}"> {{ pat.surname_pat }} {{ pat.name_pat }} {{ pat.last_name_pat }}</option>
+                {% endfor %}
+            </select>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <select name="appointmentList" id="id_appointmentList">
+                    <option value="">-----------------</option>
+                </select>
+                <br/>
+                {{ form }}
+
+                <input type="hidden" value="" id="patientIdToView" name="patientToView"/>
+                <input type="submit" value="Выпить" id="eatBtn"/>
+
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        {#        $("#patientID option").each(function () {#}
+        {#            $(this).siblings("[value=" + this.value + "]").remove();#}
+        {#        });#}
+        $(document).ready(function () {
+            function clearAppointmentList() {
+                $("select[name='appointmentList']").empty();
+                $("select[name='appointmentList']").append($("<option value='0'>---------</option>"));
+            }
+            var amount_drug = $("#id_amount");
+
+
+            $("select[name='patient']").bind("change", function () {
+                $("#patientIdToView").val($("select[name='patient']").val());
+                $.ajax({
+                    url: "{% url 'ajax-get-drug-pat' %}",
+                    type: "GET",
+                    data: {patient_id: $("select[name='patient']").val()},
+                    success: function (data) {
+                        clearAppointmentList();
+                        $.each(data.appointment_data, function (k, v) {
+
+                            $("select[name='appointmentList']").append($("<option value='" + k + "'>" + v + "</option>"));
+
+                        });
+                    }, error: function () {
+
+                    }
+                });
+            });
+            $("#eatBtn").click(function () {
+                if(!amount_drug.val()){
+                    alert("Введите значения");
+                    return false;
+                }else if(amount_drug.val() <= 0){
+                    alert("Значения не должно быть равен или меньше нуля");
+                    return false;
+                }
+            });
+            {#            var data = {#}
+            {#                "doctor_id": {{ request.session.doctor_id }}#}
+            {#            };#}
+            {#            $.ajax({#}
+            {#                type: "POST",#}
+            {#                url: "{% url 'doctor-info' %}",#}
+            {#                data: data,#}
+            {#                success: function (data) {#}
+            {#                    $.each(data.infoDoc, function (k, v) {#}
+            {#                        $('.user-header p').text(v);#}
+            {#                        $('.pull-left p').text(v.split(" ").slice(0, 2).join(" "));#}
+            {#                        $('.hidden-xs').text(v);#}
+            {#                    });#}
+            {##}
+            {#                },#}
+            {#                error: function () {#}
+            {##}
+            {#                }#}
+            {#            });#}
+        });
+    </script>
+
+{% endblock %}

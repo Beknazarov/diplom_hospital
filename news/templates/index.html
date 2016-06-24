@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+
+{% block content %}
+
+    {% block jsblock %}
+        <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/slick.min.js' %}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.slider').slick({
+                    {#                    slidesToShow: 1,#}
+                    // slidesToScroll: 1,
+                    // asNavFor: '.slider-for',
+                    dots: true,
+                    {#                    centerMode: true#}
+                    // focusOnSelect: true,
+                    // autoplay: true,
+                    // autoplayspeed: 3000,
+                    // speed: 1000
+                });
+                $('ul li a').click(function () {
+                    $('li a').removeClass("active");
+                    $(this).addClass("active");
+                });
+
+            });
+
+        </script>
+    {% endblock %}
+    {##}
+    {#            {% for news_by_categ in object.news_set.all %}#}
+    {#                <div class="item">#}
+    {#                    <div class="img-wrap"><img src="{{ news_by_categ.photo_news.url }}" alt="news"/></div>#}
+    {#                    <h5>{{ news_by_categ.title_news|cut_title }}</h5>#}
+    {##}
+    {#                    <p class="info">{{ news_by_categ.description_news|cut_desc }} ...</p>#}
+    {#                    <p class="date">{{ news_by_categ.data_pub }}</p>#}
+    {#                    <a href="{% url 'news_detail' object.slug news_by_categ.pk %}" class="read-more">read more</a>#}
+    {#                </div><!-- items -->#}
+    {#            {% endfor %}#}
+
+    <section class="sl-wrap"> <!-- slider -->
+        <div class="slider">
+            <div class="slide">
+                <img src="/media/news/3post3.jpg" height="1000" width="2000" alt="">
+                <div class="text-wrap">
+                    <div class="container">
+                        <div class="text">
+                            <h2>Хирургическое лечение левостороннего варикоцеле</h2>
+                            <p class="description colornews">Нередко варикоцеле является симптомом венной гипертензии в почке и
+                                при этом патогенетически обоснованным методом коррекции является наложения веновенозных
+                                тестикулоилеокального анастомоза.</p>
+                            <a href="/news/head/2/" class="btn">Читать далее</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- begin for django -->
+            <div class="slide">
+                <img src="/media/news/1-post1.jpg" height="1000" width="2000" alt="">
+                <div class="text-wrap">
+                    <div class="container">
+                        <div class="text">
+                            <h2>Премьер-министр Темир Сариев посетил Национальный Госпиталь</h2>
+                            <p class="description colornews">Сегодня, 23 сентября, Премьер-министр Кыргызской Республики Темир
+                                Сариев посетил Национальный Госпиталь при Министерстве здравоохранения КР. </p>
+                            <a href="/news/head/1/" class="btn">Читать далее</a>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end for django -->
+
+        </div>
+    </section>
+
+    <section class="news-block">
+        <div class="container">
+            <h3>Новостной портал </h3>
+
+            <div class="news-wrap">
+                {% for news in all_news %}
+                    <div class="item">
+
+                        <p class="date"><span class="sdate">{{ news.data_pub|date:"d" }}</span> <span
+                                class="month">{{ news.data_pub|date:"M" }}</span></p>
+                        {# {{ news.data_pub }}#}
+                        <div class="content">
+                            <div class="img-wrap">
+                                <a href="{% url 'all-detail-news' news.pk %}" class=""><img
+                                        src="{{ news.photo_news.url }}" alt="news" height="64" width="66"></a>
+                            </div>
+                            <div class="txt">
+                                <h5><a href="{% url 'all-detail-news' news.pk %}" class="">{{ news.title_news }}</a>
+                                </h5>
+                                <p class="description"> {{ news.description_news|cut_desc }} ....</p>
+                            </div>
+                        </div>
+
+                    </div><!-- item -->
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <section class="map" id="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.127982219755!2d74.59577919075065!3d42.870142785295876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7d77d419b95%3A0x308b7a5c0b8dd49!2z0J3QsNGG0LjQvtC90LDQu9GM0L3Ri9C5INCz0L7RgdC_0LjRgtCw0LvRjA!5e0!3m2!1sru!2skg!4v1466446323644"
+                width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </section>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.fn.showMap = function (options, addr) {
+                options = $.extend({
+                    navigationControl: false,
+                    mapTypeControl: false,
+                    scaleControl: false,
+                    draggable: false,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }, options);
+                var map = new google.maps.Map(document.getElementById($(this).attr('map')), options);
+                // code cut from this example as not relevant
+            };
+        });
+
+    </script>
+
+{% endblock %}

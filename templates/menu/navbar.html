@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% block styleblock %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+{% endblock %}
+{% block jsblock %}
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'jquery/js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+{% endblock %}
+<ul class="menu">
+    <li><a href="{% url 'all-news' %}">Новости</a></li>
+    <li><a href="{% url 'profileInfo' %}">Мед карта</a></li>
+    <li><a href="{% url 'analyze' %}">Анализы</a></li>
+    <li><a href="{% url 'info-table' %}">Информационное табло</a></li>
+    <li><a href="{% url 'updateInfo' %}">Личный профиль</a></li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("ul a")
+                .click(function (e) {
+
+
+                    var link = $(this);
+
+                    var item = link.parent("li");
+
+                    if (item.hasClass("active")) {
+                        item.removeClass("active").children("a").removeClass("active");
+                    } else {
+                        item.addClass("active").children("a").addClass("active");
+                    }
+
+                    if (item.children("ul").length > 0) {
+                        var href = link.attr("href");
+                        link.attr("href", "#");
+                        setTimeout(function () {
+                            link.attr("href", href);
+                        }, 300);
+                        e.preventDefault();
+                    }
+                })
+                .each(function () {
+                    var link = $(this);
+                    if (link.get(0).href === location.href) {
+                        link.addClass("active").parents("li").addClass("active");
+                        return false;
+                    } else {
+                        $('.menu li a').removeClass('active');
+                    }
+                });
+    });
+
+
+</script>

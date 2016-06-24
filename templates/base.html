@@ -1,0 +1,133 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>РНЦУ</title>
+    {% include 'link/link_header.html' %}
+    {% block styleblock %}
+        <style>
+
+        </style>
+    {% endblock %}
+
+
+    {% block jsblock %}
+        <script type="text/javascript">
+
+        </script>
+    {% endblock %}
+    <script type="text/javascript" src="{% static 'js/scroll-top.js' %}"></script>
+</head>
+
+<body>
+<header id="head">
+    <div class="container">
+        <div class="clearfix">
+            <div class="logo-wrap">
+                <a href="#" class="logo"><img src="/media/others/logo.png" height="70" width="200" alt=""></a>
+            </div>
+            <h4>Республиканский Научный Центр Урологии<br> При Национальном Госпитале КР</h4>
+            <div class="rightside">
+                <div class="phone">
+                    <div class="icphn-wrap"><img src="/media/others/ic-phone.png" alt=""></div>
+                    <div class="txt">
+                        <p class="call">Контактные данные</p>
+                        <p class="num">+996-705-832-832</p>
+                    </div>
+                </div>
+                <div class="local">
+                    <ul class="lang">
+                        <li><a href="#"><img src="/media/others/User-Chat-icon.png" alt=""></a></li>
+                        {% if request.session.patient %}
+                            <li><a href="{% url 'logout' %}">Выйти({{ request.session.patient_name }})</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Войти</a></li>
+                        {% endif %}
+
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+        {% include 'menu/navbar.html' %}
+    </div>
+</header>
+
+
+{% block content %}{% endblock %}
+
+
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+    (function () {
+        var widget_id = 'f3mfFUWEqw';
+        var d = document;
+        var w = window;
+
+        function l() {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = '//code.jivosite.com/script/widget/' + widget_id;
+            var ss = document.getElementsByTagName('script')[0];
+            ss.parentNode.insertBefore(s, ss);
+        }
+
+        if (d.readyState == 'complete') {
+            l();
+        } else {
+            if (w.attachEvent) {
+                w.attachEvent('onload', l);
+            } else {
+                w.addEventListener('load', l, false);
+            }
+        }
+    })();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+<footer>
+    <div class="container clearfix" id="footer">
+        <div class="cl3">
+            <span>  «Республиканский Научный <br/>  Центр Урологии» <br> © 2016  </span><br>
+            <a href="#head" class="btn-top"><img src="/media/others/top.png" alt="" width="90px" height="90px"></a>
+        </div>
+        <div class="wrap">
+            <ul class="menubot">
+                <li><a href="/admin/">Администратор</a></li>
+                <li><a href="/admin/">Врач</a></li>
+                <li><a href="/admin_analyze/">Лаборант</a></li>
+                <li><a target="_blank" href="https://app.jivosite.com/">Консультант</a></li>
+                <li><a href="/admin/">Регистратор</a></li>
+                <li><a href="/doctor/login/">Фармацевт</a></li>
+            </ul>
+            <p class="desc"><span>Не только сам врач должен употреблять в дело все, что необходимо, но и больной, и окружающие, и все внешние обстоятельства должны способствовать врачу в его деятельности.
+Гиппократ</span>
+            </p>
+        </div>
+
+
+    </div>
+</footer>
+{% include 'link/link_footer.html' %}
+<script>
+
+    $(document).ready(function () {
+
+        var docHeight = $(window).height();
+        var footerHeight = $('#footer').height();
+        var footerTop = $('#footer').position().top + footerHeight;
+
+        if (footerTop < docHeight) {
+            $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
+        }
+    });
+</script>
+
+</body>
+</html>

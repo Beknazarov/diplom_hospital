@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+{% load staticfiles %}
+{% block extrahead %}
+    <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <input type="submit" value="Login" id="login"/>.
+    </form>
+    <p id="success"></p>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#login').click(function () {
+                var data = {
+                    "username": $('#id_username').val(),
+                    "password": $('#id_password').val()
+                };
+                $.ajax({
+                    url: "{% url 'get-status-doctor' %}",
+                    type: "GET",
+                    data: data,
+                    success: function (data) {
+                        $("#success").text(data.data);
+                    },
+                    error: function () {
+
+                    }
+                });
+            });
+        });
+    </script>
+    {{ request.session.doctorRole }}
+{% endblock %}
+
+
+    url(r'^admin/login/$', 'django.contrib.auth.views.login', {'template_name': 'admin/login.html'},
+        name='mysite_login'),

@@ -1,0 +1,701 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load calculate %}
+{% block content %}
+    {% block styleblock %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/tab_style.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    {% endblock %}
+    <div class="container padd-topp">
+        <div class="tabs">
+            <input id="tab1" type="radio" name="tabs" checked>
+            <label for="tab1" title="Вкладка 2">Общий анализ <br/>крови</label>
+
+            <input id="tab2" type="radio" name="tabs">
+            <label for="tab2" title="Вкладка 1">Биохимический <br/>анализ крови</label>
+
+
+            <input id="tab3" type="radio" name="tabs">
+            <label for="tab3" title="Вкладка 3">Биохимический анализ крови<br/> на почечного теста</label>
+
+            <input id="tab4" type="radio" name="tabs">
+            <label for="tab4" title="Вкладка 4">Биохимический анализ крови<br/> на печеночного теста</label>
+
+            <input id="tab5" type="radio" name="tabs">
+            <label for="tab5" title="Вкладка 5">Биохимический анализ крови<br/> для общего белка</label>
+
+            <input id="tab6" type="radio" name="tabs">
+            <label for="tab6" title="Вкладка 4">Биохимический анализ<br/> в глюкоза крови</label>
+
+            <input id="tab7" type="radio" name="tabs">
+            <label for="tab7" title="Вкладка 4">Биохимический анализ крови<br/> для ПТИ</label>
+
+            {#            <input id="tab8" type="radio" name="tabs">#}
+            {#            <label for="tab8" title="Вкладка 4">Анализ мочи</label>#}
+
+            <section id="content1">
+                {% for gen_analyze_blood in gen_analyze_blood_view %}
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+                    <div class="profile">
+
+                        <div class="profile-data">Фамилия ,И.О.
+
+                            <span>______{{ gen_analyze_blood.patient }}______________________________</span>
+                            Возраст______<span>{{ gen_analyze_blood.patient.patient_fk.date_born_pat|getAge }}_______</span>
+                        </div>
+                        <div class="profile-dept">Отделение <span>_____{{ gen_analyze_blood.patient.dept_fk }}________________________________________________________________ </span>
+                        </div>
+                        <div class="profile-dept">Корпус отд__________________________________________<span> </span>
+                            для
+                            врача ___________________________
+                        </div>
+
+                    </div>
+                    <table class="tg">
+
+                        <tr>
+                            <th class="tg-baqh" rowspan="2"><br>Эритроциты</th>
+                            <th class="tg-baqh" rowspan="2"><br>Гемоглобин</th>
+                            <th class="tg-baqh" rowspan="2"><br>Цветной<br>показатель</th>
+                            <th class="tg-baqh" colspan="2"> Толстая капля</th>
+                            <th class="tg-baqh" rowspan="2"><br>Ретикулоциты</th>
+                            <th class="tg-baqh" rowspan="2"><br>Тромбоциты</th>
+                            <th class="tg-baqh" rowspan="2"><br>Паразиты</th>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">полихром</td>
+                            <td class="tg-baqh">базоф.</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-amwm" rowspan="2">10 12/ л</td>
+                            <td class="tg-amwm" rowspan="2">80-100 г/л</td>
+                            <td class="tg-amwm" rowspan="2"> 0,8-1,0</td>
+                            <td class="tg-amwm" rowspan="2">+</td>
+                            <td class="tg-amwm" rowspan="2">-</td>
+                            <td class="tg-amwm" rowspan="2">0,6-0,8</td>
+                            <td class="tg-amwm" rowspan="2">250-400 <br>тысяч</td>
+                            <td class="tg-baqh" rowspan="2"></td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">{{ gen_analyze_blood.erythrocytes }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.hemoglobin }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.color_index }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.polychrome }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.basophil }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.reticulocytes }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.platelets }}</td>
+                            <td class="tg-baqh">{{ gen_analyze_blood.vermin }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                            <td class="tg-9j4x"></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="tg2">
+                        <tr>
+                            <th class="tg-baqh2" rowspan="2"><br>Лейкоциты</th>
+                            <th class="tg-baqh2" rowspan="2"><br>Базофилы</th>
+                            <th class="tg-baqh2" rowspan="2"><br>Эозино-<br>филы</th>
+                            <th class="tg-baqh2" colspan="4">Нейтрофилы</th>
+                            <th class="tg-baqh2" rowspan="2"><br>Лимфоциты</th>
+                            <th class="tg-baqh2" rowspan="2"><br>Моноциты</th>
+                            <th class="tg-baqh2" rowspan="2"><br>Индекс<br>сдвига</th>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh2">Миэлоц</td>
+                            <td class="tg-baqh2">Юные</td>
+                            <td class="tg-baqh2">Палоч</td>
+                            <td class="tg-baqh2">Сегмент</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-amwm2" rowspan="2"><br>Норма<br>6-8 тысяч<br>10/9л</td>
+                            <td class="tg-amwm2">0-0,5%</td>
+                            <td class="tg-amwm2"> 3-4%</td>
+                            <td class="tg-amwm2">-</td>
+                            <td class="tg-amwm2">-</td>
+                            <td class="tg-amwm2">4%</td>
+                            <td class="tg-amwm2">63-67%</td>
+                            <td class="tg-amwm2">24-30%</td>
+                            <td class="tg-amwm2">6-8%</td>
+                            <td class="tg-amwm2">0-6</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-amwm2">30-40</td>
+                            <td class="tg-amwm2">180-200</td>
+                            <td class="tg-amwm2">-</td>
+                            <td class="tg-amwm2">-</td>
+                            <td class="tg-amwm2">240-320</td>
+                            <td class="tg-amwm2">4020-5040</td>
+                            <td class="tg-amwm2">1800-240С</td>
+                            <td class="tg-amwm2">360-640</td>
+                            <td class="tg-baqh2"></td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.leukocytes }}</td>
+                            <td class="tg-amwm2">{{ gen_analyze_blood.basophils }}</td>
+                            <td class="tg-amwm2">{{ gen_analyze_blood.eozofily }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.mielots }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.young }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.paloch }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.segment }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.lymphocytes }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.monocytes }}</td>
+                            <td class="tg-baqh2">{{ gen_analyze_blood.shear_index }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-9j4x2"></td>
+                            <td class="tg-yw4l2"></td>
+                            <td class="tg-yw4l2"></td>
+                        </tr>
+
+                    </table>
+                    <div class="clearfix-analyze lh-bottom">
+
+                        <div>Апизоцитоз_____<span>{{ gen_analyze_blood.anisocytosis }}_____________________________________________</span>
+                            Резистентность эритроитов
+                            <span>{{ gen_analyze_blood.eryth_resistance }}</span></div>
+                        <div>Пойкилоцитоз____________<span>{{ gen_analyze_blood.microplania }}</span>______________________Свертыв,
+                            крови
+                            __________<span>{{ gen_analyze_blood.convolution_blood }}</span>_____________
+                        </div>
+                        <div>Нормобласты_______<span>{{ gen_analyze_blood.normoblasts }}</span>________________________________Начало_____<span>{{ gen_analyze_blood.normob_start }}</span>____________________
+                        </div>
+                        <div>Оседание эритроцитов (СОЭ)_____<span>{{ gen_analyze_blood.eryth_sediment }}_______________________________</span>конец_______<span>{{ gen_analyze_blood.eryth_sediment_end }}</span>___________
+                        </div>
+                        <div class="analyze-date">
+                            "__<span>{{ gen_analyze_blood.compl_date|date:"d" }}</span>__"_______<span>{{ gen_analyze_blood.compl_date|date:"M" }}</span>_______<span>{{ gen_analyze_blood.compl_date|date:"Y" }}_г</span>
+                        </div>
+                        <div class="doctor"><strong>Ф.И.О.</strong>
+                            <span>______{{ gen_analyze_blood.doctor }}__________</span></div>
+                        <div class="doctor">Подпись <span>______________________________</span></div>
+
+                    </div>
+                {% endfor %}
+            </section>
+            <section id="content2">
+
+                <div class="bloodchemistry">
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span
+                                class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+
+                    {% for blood_chemistry_analyze in blood_chemistry_analyze_view %}
+                        <table>
+
+                            <div class="profile-data">Ф.И.О. ____________<span>{{ blood_chemistry_analyze.patient }}_______________</span>
+                            </div>
+                            <div class="profile-dept">
+                                Отделение______________<span>{{ blood_chemistry_analyze.patient.dept_fk }}</span>_____________________
+                            </div>
+                            <tr>
+                                <td>1</td>
+                                <td>Общий белок</td>
+                                <td>_________<span>{{ blood_chemistry_analyze.total_protein }}</span>_____________
+                                <td>г/л</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Альбумины</td>
+                                <td> _________<span> {{ blood_chemistry_analyze.albumin }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>глобулины</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.globulins }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> альфа-1</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.alpha1 }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> альфа-2</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.alpha2 }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> бетта</td>
+                                <td><span>_________ {{ blood_chemistry_analyze.betta }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> гамма</td>
+                                <td><span>_________ {{ blood_chemistry_analyze.gamma }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> К=А/Г</td>
+                                <td><span>_________ {{ blood_chemistry_analyze.RAGform }}</span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>мочевина</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.urea }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>креатинин</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.creatinine }} </span>_____________
+                                <td>мкмоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>тимоловая проба</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.thymol_test }} </span>_____________
+                                <td>ед.</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>сулемовая проба</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.sulemovaya_test }}</span>_____________
+                                <td>мл.</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Проба Т-Ара</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.T_ara_test }} </span>_____________
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Билирубин общий</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.total_bilirubin }} </span>_____________
+                                <td>мкмоль/л</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> прямой</td>
+                                <td>
+                                    _________<span> {{ blood_chemistry_analyze.straight_bilirubin }}______________</span>
+                                <td>мкмоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>АЛТ</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.alt }}</span>_____________
+                                <td>мккат/л</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>АСТ</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.ast }}</span>_____________
+                                <td>мккат/л</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Альфа-амилаза</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.alpha_amylase }}</span>_____________
+                                <td>мг/мл/час</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Креатинфосфокиназа</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.creatine_phosphokinase }} </span>_____________
+                                <td>мккат/л</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>Холинэстераза</td>
+                                <td>_________ <span> {{ blood_chemistry_analyze.holinestereza }}</span>_____________
+                                <td>мккат/л</td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td>фосфатаза кислая</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.acidic_phosphatase }} </span>_____________
+                                <td>нкат/л</td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td>фосфатаза щелочная</td>
+                                <td>__________<span> {{ blood_chemistry_analyze.alkaline_phosphatase }} </span>_____________
+                                <td>мккат/л</td>
+                            </tr>
+                            <tr>
+                                <td>17</td>
+                                <td>Л А П</td>
+                                <td>__________<span> {{ blood_chemistry_analyze.LAP }}</span>_____________
+                                <td>нкат/л</td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td> Холестерин</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.cholesterol }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td>Общие липйды</td>
+                                <td> _________<span> {{ blood_chemistry_analyze.general_lipydy }}</span>_____________
+                                <td>г/л</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>Бетта липопротеиды</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.beta_lipoproteins }} </span>_____________
+                                <td>г/л</td>
+                            </tr>
+                            <tr>
+                                <td>21</td>
+                                <td>Трилглицериды</td>
+                                <td> _________<span> {{ blood_chemistry_analyze.triglycerides }} </span>_____________
+                                <td>ммоль/г</td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td>Гаптоглобин</td>
+                                <td>_________<span>{{ blood_chemistry_analyze.haptoglobin }}</span>_____________
+                                <td>мг/л</td>
+                            </tr>
+                            <tr>
+                                <td>23</td>
+                                <td>Церулоплазмин</td>
+                                <td>_________<span>  {{ blood_chemistry_analyze.hepatocuprein }}</span>_____________
+                                <td>мкмоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>24</td>
+                                <td>Сиаловая проба</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.sialic_test }}</span>_____________
+                                <td>ед.</td>
+                            </tr>
+                            <tr>
+                                <td>25</td>
+                                <td>'С' реактивный белок</td>
+                                <td>_________<span>{{ blood_chemistry_analyze.C_reactive_protein }} </span>_____________
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>26</td>
+                                <td>Реакция Жокинена</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.zhokinena_reaction }} </span>_____________
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>27</td>
+                                <td>Калий</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.potassium }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>28</td>
+                                <td>Натрий</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.sodium }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>29</td>
+                                <td>Хлориды</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.chlorides }} </span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>30</td>
+                                <td> Кальций</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.calcium }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>31</td>
+                                <td>Фосфор</td>
+                                <td> _________<span> {{ blood_chemistry_analyze.phosphorus }} </span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>32</td>
+                                <td> Железо</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.iron }} </span>_____________
+                                <td>мкмоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>33</td>
+                                <td>Глюкоза крови</td>
+                                <td> _________<span> {{ blood_chemistry_analyze.blood_glucose }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>34</td>
+                                <td> в моче</td>
+                                <td><span>_________{{ blood_chemistry_analyze.glucose_urine }} </span>_____________
+                                <td>%</td>
+                            </tr>
+                            <tr>
+                                <td>35</td>
+                                <td>Пировиноградная к-та</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.pyruvic_k_ta }}</span>_____________
+                                <td>мкмоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>36</td>
+                                <td>Мочевая кислота</td>
+                                <td>_________<span> {{ blood_chemistry_analyze.uric_acid }}</span>_____________
+                                <td>ммоль/л</td>
+                            </tr>
+                            <tr>
+                                <td>37</td>
+                                <td> 17 КС</td>
+                                <td>_________<span>{{ blood_chemistry_analyze.CS17 }}</span>_____________
+                                <td>мкмоль/сут</td>
+                            </tr>
+
+
+                        </table>
+                        <div class="complate-analyze">
+                            <div class="lh-bottom">
+                                <div><strong>Исследование проверил(а)</strong></div>
+
+                                <div><strong>Врач</strong>_______<span>{{ blood_chemistry_analyze.doctor }}</span>____________
+                                </div>
+                                <div> Подпись<span>____________________________</span></div>
+                                <div class="analyze-date">
+                                    "__<span>{{ blood_chemistry_analyze.compl_date|date:"d" }}</span>__"_______<span>{{ blood_chemistry_analyze.compl_date|date:"M" }}</span>_______<span>{{ blood_chemistry_analyze.compl_date|date:"Y" }}_г</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+            </section>
+            <section id="content3">
+                <div class="renal_analyze">
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+                    {% for blood_chemistry_analyze in blood_chemistry_analyze_view %}
+                        <div class="profile">
+
+                            <div class="profile-data">Фамилия ,И.О.
+                                <span>______{{ blood_chemistry_analyze.patient }}____________</span></div>
+                            <div class="profile-dept">Отделение
+                                <span>_____{{ blood_chemistry_analyze.patient.dept_fk }}_____________________ </span>
+                            </div>
+                            <div><span><strong>Почечный тест</strong></span></div>
+
+                            <ul>
+
+                                <li>
+                                    <div>Мочевина________<span>{{ blood_chemistry_analyze.urea }}</span>____________ммоль/л
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Креатинин________<span>{{ blood_chemistry_analyze.creatinine }}</span>____________мкмоль/л
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Остаточный
+                                        азот________<span>{{ blood_chemistry_analyze.resudual_nitrogen }}</span>____________мкмоль/л
+                                    </div>
+                                </li>
+
+                                <div><strong>Врач</strong>_______<span>{{ blood_chemistry_analyze.doctor }}</span>____________
+                                </div>
+
+                                <div class="analyze-date">
+                                    "__<span>{{ blood_chemistry_analyze.compl_date|date:"d" }}</span>__"_______<span>{{ blood_chemistry_analyze.compl_date|date:"M" }}</span>_______<span>{{ blood_chemistry_analyze.compl_date|date:"Y" }}_г</span>
+                                </div>
+
+
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </section>
+            <section id="content4">
+                <div class="all_analyze">
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+                    <div class="lh-bottom">
+                        {% for blood_chemistry_analyze in blood_chemistry_analyze_view %}
+                            <div class="profile">
+
+                                <div class="profile-data">Фамилия ,И.О.
+                                    <span>______{{ blood_chemistry_analyze.patient }}____________</span></div>
+                                <div class="profile-dept">Отделение
+                                    <span>_____{{ blood_chemistry_analyze.patient.dept_fk }}_____________________ </span>
+                                </div>
+                            </div>
+                            <span><strong>Печеночый тест</strong></span>
+
+                            <ul>
+                                <li>
+                                    <div>Билирубин:
+                                        общий_________<span>{{ blood_chemistry_analyze.total_bilirubin }}</span>_______мкмоль/л<br/>
+                                    </div>
+                                    <div>прямой_________<span>{{ blood_chemistry_analyze.straight_bilirubin }}</span>_______мкмоль/л<br/>
+                                    </div>
+                                    <div>непрямой_________<span>{{ blood_chemistry_analyze.indirect_bilirubin }}</span>_______мкмоль/л
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Тимоловая проба_________<span>{{ blood_chemistry_analyze.thymol_test }}</span>_______един
+                                    </div>
+                                </li>
+                            </ul>
+                            <div><strong>Врач</strong>_______<span>{{ blood_chemistry_analyze.doctor }}</span>____________
+                            </div>
+
+                            <div class="analyze-date">
+                                "__<span>{{ blood_chemistry_analyze.compl_date|date:"d" }}</span>__"_______<span>{{ blood_chemistry_analyze.compl_date|date:"M" }}</span>_______<span>{{ blood_chemistry_analyze.compl_date|date:"Y" }}_г</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </section>
+            <section id="content5">
+                <div class="all_analyze">
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+                    <div class="lh-bottom">
+                        {% for blood_chemistry_analyze in blood_chemistry_analyze_view %}
+                            <div class="profile">
+
+                                <div class="profile-data">Фамилия ,И.О.
+                                    <span>______{{ blood_chemistry_analyze.patient }}____________</span></div>
+                                <div class="profile-dept">Отделение
+                                    <span>_____{{ blood_chemistry_analyze.patient.dept_fk }}_____________________ </span>
+                                </div>
+                            </div>
+
+
+                            <div><strong>Общий
+                                белок</strong>________<span>{{ blood_chemistry_analyze.total_protein }}</span>_______г/л
+                            </div>
+
+                            <div><strong>Врач</strong>_______<span>{{ blood_chemistry_analyze.doctor }}</span>____________
+                            </div>
+
+                            <div class="analyze-date">
+                                "__<span>{{ blood_chemistry_analyze.compl_date|date:"d" }}</span>__"_______<span>{{ blood_chemistry_analyze.compl_date|date:"M" }}</span>_______<span>{{ blood_chemistry_analyze.compl_date|date:"Y" }}_г</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <section id="content6">
+                <div class="all_analyze">
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+                    <div class="lh-bottom">
+                        {% for blood_chemistry_analyze in blood_chemistry_analyze_view %}
+                            <div class="profile">
+
+                                <div class="profile-data">Фамилия ,И.О.
+                                    <span>______{{ blood_chemistry_analyze.patient }}____________</span></div>
+                                <div class="profile-dept">Отделение
+                                    <span>_____{{ blood_chemistry_analyze.patient.dept_fk }}_____________________ </span>
+                                </div>
+                            </div>
+
+                            <ul>
+                                <li>
+                                    <div><strong>Глюкоза
+                                        крови</strong>_________<span>{{ blood_chemistry_analyze.blood_glucose }}</span>_______ммоль/л
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>Глюкоза в моче_________<span>{{ blood_chemistry_analyze.glucose_urine }}</span>_______ммоль/л
+                                    </div>
+                                </li>
+                            </ul>
+                            <div><strong>Врач</strong>_______<span>{{ blood_chemistry_analyze.doctor }}</span>____________
+                            </div>
+
+                            <div class="analyze-date">
+                                "__<span>{{ blood_chemistry_analyze.compl_date|date:"d" }}</span>__"_______<span>{{ blood_chemistry_analyze.compl_date|date:"M" }}</span>_______<span>{{ blood_chemistry_analyze.compl_date|date:"Y" }}_г</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <section id="content7">
+                <div class="all_analyze">
+                    <div class="header clearfix-analyze">
+                        <div class="header-title left"><span>Министерство здравоохранения КР <br/><span class="left2"> Национальный госпиталь</span></span>
+                        </div>
+                        <div class="header-ministry right"><span>учет. ф. №225/у <br/> Утверждена Министерством<br/> 17.11.1992г №338</span>
+                        </div>
+                    </div>
+                    <div class="lh-bottom">
+                        {% for pti in pti_analyze_view %}
+                            <div class="profile">
+
+                                <div class="profile-data">Фамилия ,И.О.
+                                    <span>______{{ pti.patient }}____________</span></div>
+                                <div class="profile-dept">Отделение
+                                    <span>_____{{ pti.patient.dept_fk }}_____________________ </span>
+                                </div>
+                            </div>
+
+                            <div><strong>ПТИ</strong>_________<span>{{ pti.PTI }}</span>___________%
+                            </div>
+
+                            <div>ССК_________<span>{{ pti.SSK }}</span>______________
+                            </div>
+
+                            <div><strong>Врач</strong>_______<span>{{ pti.doctor }}</span>____________
+                            </div>
+
+                            <div class="analyze-date">
+                                "__<span>{{ pti.compl_date|date:"d" }}</span>__"_______<span>{{ pti.compl_date|date:"M" }}</span>_______<span>{{ pti.compl_date|date:"Y" }}_г</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+{% endblock %}

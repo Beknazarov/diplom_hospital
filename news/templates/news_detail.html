@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+{% block styleblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/news_detail.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container padd-topp clearfix">
+        {#        {% for d_news in detail_news %}#}
+        <div class="img-wrap-big brdr"><img src="{{ detail_news.photo_news.url }}" alt="categ-news"/></div>
+        <h2 class="more">{{ detail_news.title_news }}</h2>
+        <p class="date">Опубликовано {{ detail_news.data_pub }}</p>
+        <span class="description">{{ detail_news.description_news }}</span>
+        {##}
+        {#        {% endfor %}#}
+
+        <div class="more-news brdr">
+            <h3>Другие новости</h3>
+            <div class="items">
+                {% for news_other in other_news %}
+                    <div class="item">
+                        <div class="img-wrap">
+                            <img src="{{ news_other.photo_news.url }}" alt="">
+                        </div>
+                        <div class="title"><a
+                                href="{% url 'all-detail-news' news_other.id %}">{{ news_other.title_news|cut_title }}</a></div>
+                        <div class="description">
+                            {{ news_other.description_news|cut_title2 }}
+                        </div>
+                        <div class="button1"><a href="{% url 'all-detail-news' news_other.id %}">Читать далее</a></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

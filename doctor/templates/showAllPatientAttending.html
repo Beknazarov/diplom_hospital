@@ -1,0 +1,15 @@
+{% extends "base_pharmacy.html" %}
+{% load calculate %}
+{% load staticfiles %}
+{% block style_block_doctor %}
+    <link rel="stylesheet" href="{% static 'css/alert.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}"/>
+{% endblock %}
+{% block content_pharmacy %}
+    {% for i in rpatient %}
+        <a href="{% url 'print-med-karta' i.id %}"> {{ i.patient_fk }}</a>
+
+    {% endfor %}
+
+{% endblock %}

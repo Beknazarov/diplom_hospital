@@ -1,0 +1,127 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tbl-header {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tbl-content {
+    height: 200px;
+    overflow-x: auto;
+    margin-top: 0;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+th {
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 13px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 15px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 14px;
+    color: #000;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+}
+
+.second tr td {
+    color: #fff;
+}
+
+/* demo styles */
+
+body {
+    /*background: -webkit-linear-gradient(left, #25c481, #25b7c4);*/
+    /*background: linear-gradient(to right, #25c481, #25b7c4);*/
+    background-image: url("/media/others/bg.png");
+    font-family: georgia, serif;
+}
+
+section {
+    margin: 50px;
+}
+
+/* follow me template */
+
+.made-with-love {
+    margin-top: 40px;
+    padding: 10px;
+    clear: left;
+    text-align: center;
+    font-size: 10px;
+    font-family: georgia, serif;
+    color: #fff;
+}
+
+.made-with-love i {
+    font-style: normal;
+    color: #F50057;
+    font-size: 14px;
+    position: relative;
+    top: 2px;
+}
+
+.made-with-love a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.made-with-love a:hover {
+    text-decoration: underline;
+}
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.info-table-title, .info-table-title2 {
+    text-align: center;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    font-size: 24px;
+    color: #417188;
+
+}
+
+.info-table-title p {
+    margin: 0 0 15px 0;
+}
+
+.info-table-title2 p {
+    margin: 15px 0;
+}
+
+.report-app-list h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+.report-app-list {
+    padding: 20px 0 100px 0;
+}
+
+.report-app-list .tbl-content td:last-child {
+    padding-left: 61px;
+}
+
+/*.padding-top-table{*/
+/*padding: 20px 0;*/
+/*}*/

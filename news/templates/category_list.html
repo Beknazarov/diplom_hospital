@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+{% block styleblock %}
+    <link rel="stylesheet" href="{% static 'css/news_style.css' %}"/>
+{% endblock %}
+{% block content %}
+    <section class="news">
+        {% for categ in object_list %}
+            <a href="{{ categ.get_absolute_url }}" >{{ categ.name_categ }}</a>
+        {% endfor %}
+    </section>
+
+{% endblock %}

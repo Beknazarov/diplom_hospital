@@ -1,0 +1,43 @@
+{% extends "base_pharmacy.html" %}
+{% load calculate %}
+{% load staticfiles %}
+{% block style_block_doctor %}
+    <link rel="stylesheet" href="{% static 'css/alert.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}"/>
+{% endblock %}
+{% block content_pharmacy %}
+    <div class="container">
+        <div class="center-pharmacy-add center">
+            <h2>Войти в систему</h2>
+            {% if messages %}
+                <div class="alert alert-danger success">
+
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                {% if request.session.doctorRole == 2 %}
+                    <script type="text/javascript">
+                        window.location.href = "{% url 'sheet-assignment' %}";
+                    </script>
+                {% elif request.session.doctorRole == 3 %}
+                    <script type="text/javascript">
+                        window.location.href = "{% url 'admin-pharmacy-drug-create' %}";
+                    </script>
+                {% endif %}
+
+            {% else %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form }}<br/>
+                    <input type="submit" value="Войти" id="signDoc"/>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

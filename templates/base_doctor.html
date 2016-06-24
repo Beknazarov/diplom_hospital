@@ -1,0 +1,132 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/doctor_admin/index.css' %}"/>
+    <link rel="stylesheet" href="{% static 'suit/css/suit.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    {% block js_block_doctor %}
+        <script type="text/javascript">
+
+        </script>
+
+    {% endblock %}
+    {% block style_block_doctor %}
+        <style>
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+<header class="doc-head clearfix header">
+    <div class="lf w15">
+        <a href="#" class="logo">рнцу</a>
+    </div>
+    <div class="header-content header-content-first">
+        <div class="header-column icon">
+            <i class="icon-time"></i>
+        </div>
+        <div class="header-column">
+            <span class="date"> Воскресенье, 19th Июнь 2016</span><br>
+            <span class="time" id="clock">18:24</span>
+        </div>
+    </div>
+    <div id="user-tools">
+
+        Добро пожаловать,
+        <strong>
+
+            zlobin_vladimir</strong>.
+
+                <span class="user-links">
+
+    <a href="/kif/info-table/">Информационное табло</a> /
+
+        <a href="/">Открыть сайт</a> /
+
+
+
+
+
+
+        <a href="/admin/password_change/">Изменить пароль</a> /
+
+    <a href="/admin/logout/">Выйти</a>
+
+                </span>
+    </div>
+</header>
+
+
+<section class="main clearfix">
+    <div class="laside w15">
+        <form action="#">
+            <div class="around">
+                <input type="text" class="search">
+                <button></button>
+            </div>
+        </form>
+        <ul class="menu">
+            <li class="active">
+                <a href="/admin/"><i class="icon-home"></i>Начало
+                </a>
+            </li>
+            <li>
+                <a href="/admin/KIF/hospital/"><i class="icon-chevron-right"></i>Kif
+                </a>
+            </li>
+            <li>
+                <a href="/admin/news/categorynews/"><i class="icon-chevron-right"></i>News
+                </a>
+            </li>
+            <li>
+                <a href="/admin/pharmacy/acceptancelist/"><i class="icon-chevron-right"></i>Pharmacy
+                </a>
+            </li>
+            <li>
+                <a href="/admin/medicalhistory/infection/"><i class="icon-chevron-right"></i>Медицинская карта
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        {% block content_pharmacy %}
+
+        {% endblock %}
+    </div>
+</section>
+
+
+<div id="footer" class="footer">
+    <div class="content">
+        <div class="tools">
+
+            <a href="http://djangosuit.com/support/" target="_blank" class="icon"><i class="icon-question-sign"></i>Support</a>
+            <a href="http://djangosuit.com/pricing/" target="_blank" class="icon"><i
+                    class="icon-bookmark"></i>Licence</a>
+            <a href="http://github.com/darklow/django-suit/issues" target="_blank" class="icon"><i
+                    class="icon-comment"></i>Report a bug</a>
+
+        </div>
+
+        <div class="copyright">
+
+            sdf sdf
+            Copyright © 2016 <br>Developed by
+            <a href="https://medlenovo.herokuapp.com/" target="_blank">medlenovo.herokuapp.com</a>
+
+        </div>
+
+        <div class="branding">
+
+            Бекназаров Н.Б, Абдыкасымов А.Б
+            Copyright © 2016 <br>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

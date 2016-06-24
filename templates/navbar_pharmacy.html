@@ -1,0 +1,114 @@
+{% load staticfiles %}
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>РН</b>ЦУ</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>РНЦУ</b>  БИШКЕК</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <img src="/media/adminLte/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">Alexander Pierce</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- The user image in the menu -->
+                        <li class="user-header">
+                            <img src="/media/adminLte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                            <p>
+                                Alexander Pierce - Web Developer
+                                <small>Member since Nov. 2012</small>
+                            </p>
+                        </li>
+
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            </div>
+                            <div class="pull-right">
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'logout-doctor' %}" class="btn btn-default btn-flat">Выйти</a>
+                                {% else %}
+                                    <a href="{% url 'login-doctor' %}" class="btn btn-default btn-flat">Войти</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="/media/adminLte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>Alexander Pierce</p>
+                <!-- Status -->
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+            <li class="header">Меню</li>
+            {% if user.is_authenticated %}
+                {% if request.session.doctorRole == 2 %}
+                    <li><a href="{% url 'sheet-assignment' %}"><i class="fa fa-link"></i> <span>Лист назначения</span></a>
+                    </li>
+                    <li><a href="{% url 'med-karta-for-doctor' %}"><i class="fa fa-link"></i> <span>Мед карта</span></a>
+                    </li>
+                     <li><a href="{% url 'drug-for-patient' %}"><i class="fa fa-link"></i> <span>Время принятия лекарств</span></a>
+                    </li>
+
+                {% elif request.session.doctorRole == 3 %}
+                    <li><a href="{% url 'admin-pharmacy-drug-create' %}"><i class="fa fa-link"></i>
+                        <span>Медикаменты</span></a>
+                    </li>
+                {% endif %}
+
+
+                <!-- Optionally, you can add icons to the links -->
+                <li><a href="{% url 'admin-pharmacy-report' %}"><i class="fa fa-link"></i>
+                    <span>Отчет</span></a>
+                </li>
+                {#            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>#}
+                {#            <li class="treeview">#}
+                {#                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i#}
+                {#                        class="fa fa-angle-left pull-right"></i></a>#}
+                {#                <ul class="treeview-menu">#}
+                {#                    <li><a href="#">Link in level 2</a></li>#}
+                {#                    <li><a href="#">Link in level 2</a></li>#}
+                {#                </ul>#}
+                {#            </li>#}
+            {% endif %}
+        </ul>
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

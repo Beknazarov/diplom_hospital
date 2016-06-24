@@ -1,0 +1,18 @@
+.padd-topp {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.center-update-profile {
+    width: 500px;
+    margin: 0 auto;
+}
+
+body {
+    /*background: -webkit-linear-gradient(left, #25c481, #25b7c4);*/
+    /*background: linear-gradient(to right, #25c481, #25b7c4);*/
+    background-image: url("/media/others/bg.png");
+
+    font-family: georgia, serif;
+
+}

@@ -1,0 +1,47 @@
+{% extends 'base_pharmacy.html' %}
+{% load app_filters %}
+{% load staticfiles %}
+{% block content_pharmacy %}
+    {% block style_block_doctor %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}">
+    {% endblock %}
+    <div class="container">
+
+        <div class="center-pharmacy-add center">
+            <select name="department" id="department">
+                <option value="0">-------------------</option>
+                {% for dept in department %}
+                    <option value="{{ dept.id }}"> {{ dept.name_dept }}</option>
+                {% endfor %}
+            </select>
+            <div class="patient">
+                <ul></ul>
+            </div>
+
+
+            {{ alllll }}
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("select[name='department']").bind("change", function () {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'ajax-get-record-patient' %}",
+                    data: {"dept_id": $("select[name='department']").val()},
+                    success: function (data) {
+                        $.each(data.record_patient_id, function (k, v) {
+                            $('.patient ul').append("<li><a href='/pharmacy/report_assignment_sheet/" + k + "'>" + v + " </a> </li>");
+                        });
+                    },
+                    error: function () {
+                        alert("Error");
+                    }
+                });
+            });
+
+
+        });
+    </script>
+{% endblock %}

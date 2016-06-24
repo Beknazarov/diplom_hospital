@@ -1,0 +1,170 @@
+{% extends 'base_pharmacy.html' %}
+{% load staticfiles %}
+{% load app_filters %}
+{% block js_block_doctor %}
+
+{% endblock %}
+{% block content_pharmacy %}
+    {% block style_block_doctor %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}">
+    {% endblock %}
+
+    <div class="container">
+
+        <div class="NONEcenter-pharmacy-add">
+            <h2>{{ title }}</h2>
+            <div class="ord">
+                <div class="form-get-report">
+                    <label for="list-drug">Выберите лекарство: </label>
+                    <select name="drug" id="list-drug">
+                        <option value="0">--(Все лекарство)--</option>
+                        {% for i  in reportDrug %}
+                            <option value="{{ i.id }}">{{ i.name_drug }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="ToDate">Период с: </label>
+                    <input type="date" id="ToDate"/>
+                    <label for="FromDate">по: </label>
+                    <input type="date" id="FromDate"/>
+                    <input type="submit" id="submit-report" value="Получить отчет"/>
+                </div>
+
+            </div>
+
+            <div class="ord">
+                <div class="result-report-drug-count">
+                    <table id="report-drug-table" class="responstable">
+                        <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Количество</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="result-report-drug-one-day">
+                    <table id="report-drug-table" class="responstable">
+                        <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Количество</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var drug = $("#list-drug");
+            var drugToDate = $("#ToDate");
+            var drugFromDate = $("#FromDate");
+            var table_report_body = $("#report-drug-table tbody");
+            drugFromDate.prop('disabled', true);
+            drug.bind("change", function () {
+                $(".result-report-drug-count").css("display", "none");
+                $(".result-report-drug-one-day").css("display", "none");
+                if (drug.val() == 0) {
+                    drugFromDate.prop('disabled', true);
+                } else {
+                    drugFromDate.prop('disabled', false);
+                }
+            });
+
+            $("#submit-report").click(function () {
+
+
+                if (drug.val() == 0) {
+                    var data2 = {
+                        "date_to_drug": drugToDate.val()
+                    };
+                    if (drugToDate.val()) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'ajax-get-report-drug-pat' %}",
+                            data: data2,
+                            success: function (data) {
+                                $(".result-report-drug-one-day").css("display", "block");
+                                table_report_body.find("tr").remove();
+                                $.each(data.report_drug, function (k, v) {
+                                    $(".d").text(v);
+                                    $(".s").text(k);
+                                    table_report_body.append("<tr><td>" + k.substr(0, 10) + "</td><td>" + v + "</td></tr>")
+                                });
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    } else {
+                        alert("Заполните все поля");
+                    }
+
+
+                } else {
+                    var data1 = {
+                        "drug": drug.val(),
+                        "date_to_drug": drugToDate.val(),
+                        "date_from_drug": drugFromDate.val()
+                    };
+                    var enddata = drugToDate.val().replace('-', '/');
+                    var startdata = drugFromDate.val().replace('-', '/');
+                    if (startdata > enddata) {
+                        if (drugToDate.val() && drugFromDate.val()) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{% url 'ajax-get-report-drug-range-date-pat' %}",
+                                data: data1,
+                                success: function (data) {
+                                    $(".result-report-drug-count").css("display", "block");
+                                    table_report_body.find("tr").remove();
+
+                                    $.each(data.report_drug, function (k, v) {
+                                        table_report_body.append("<tr><td>" + k.substr(0, 10) + "</td><td>" + v + "</td></tr>");
+
+                                    });
+
+                                },
+                                error: function () {
+
+                                }
+                            });
+                        } else {
+                            alert("Заполните все поля");
+                        }
+                    } else {
+                        alert("Начальный период не должен превышать конечного периода");
+                    }
+                }
+
+            });
+            var data = {
+                "doctor_id": {{ request.session.doctor_id }}
+            };
+            $.ajax({
+                type: "POST",
+                url: "{% url 'doctor-info' %}",
+                data: data,
+                success: function (data) {
+                    $.each(data.infoDoc, function (k, v) {
+                        $('.user-header p').text(v);
+                        $('.pull-left p').text(v.split(" ").slice(0, 2).join(" "));
+                        $('.hidden-xs').text(v);
+                    });
+
+                },
+                error: function () {
+
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

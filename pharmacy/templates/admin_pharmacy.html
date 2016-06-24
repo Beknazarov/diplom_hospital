@@ -1,0 +1,110 @@
+{% extends 'base_pharmacy.html' %}
+{% load calculate %}
+{% load staticfiles %}
+{% block content_pharmacy %}
+    {% block styleblock %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/pharmacy_style.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/alert.css' %}"/>
+    {% endblock %}
+    {% block js_block_doctor %}
+        <script type="text/javascript" src="{% static 'jquery/js/jquery.min.js' %}"></script>
+    {% endblock %}
+    <div class="container">
+
+        <div class="center-pharmacy-add center">
+            <div class="alert-message">
+                <p class="success"></p>
+            </div>
+            <h2>Медикаменты</h2>
+            {% for drug in drugs %}
+                <div class="drug-title"><span>{{ drug.name_drug }}</span>
+                    <span><input type="number" id="col{{ drug.id }}"/></span>
+                </div>
+            {% endfor %}
+
+            <div class="add-submit-drug"><input type="submit" id="click_drug" value="Добавить лекарство"/></div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#click_drug").click(function () {
+                    var check_empty = true;
+                    var positive_number = true;
+                    var arr_count = [];
+                    var arr_id = [];
+
+
+                    {% for drug in drugs %}
+                        arr_id.push("{{ drug.id }}");
+
+                    {% endfor %}
+                    for (var i = 0; i < {{ count }}; i++) {
+                        arr_count.push($('#col' + arr_id[i] + '').val());
+                        if (!arr_count[i]) {
+                            check_empty = false;
+                        }
+                        if (arr_count[i] < 0) {
+                            positive_number = false;
+                        }
+                    }
+
+                    var data = {"id[]": arr_id, "count[]": arr_count};
+                    if (check_empty) {
+                        if (positive_number) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{% url 'admin-pharmacy-drug-create' %}",
+                                data: data,
+                                success: function (data) {
+                                    $('.success').text(data.data);
+                                    var e = $('.alert-message');
+                                    e.fadeIn();
+                                    e.queue(function () {
+                                        setTimeout(function () {
+                                            e.dequeue();
+                                        }, 2000);
+                                    });
+                                    e.fadeOut('slow');
+
+
+                                    $(':input').val('');
+                                    $('#click_drug').val('Добавить лекарство');
+                                },
+                                error: function () {
+                                    alert("Заполните все данные");
+                                }
+                            });
+                        } else {
+                            alert("Значения должно быть больше нуля");
+                        }
+                    } else {
+                        alert("Заполните все данные");
+                    }
+                });
+
+
+                var data = {
+                    "doctor_id": {{ request.session.doctor_id }}
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'doctor-info' %}",
+                    data: data,
+                    success: function (data) {
+                        $.each(data.infoDoc, function (k, v) {
+                            $('.user-header p').text(v);
+                            $('.pull-left p').text(v.split(" ").slice(0, 2).join(" "));
+                            $('.hidden-xs').text(v);
+                        });
+
+                    },
+                    error: function () {
+
+                    }
+                });
+
+
+            });
+        </script>
+    </div>
+{% endblock %}
